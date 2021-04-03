@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h3 class="card-header"><b>Title:</b> {{ post.title }}</h3>
+    <div class="container">
+<b>Author:</b> {{ post.user }}<br>
+<b>Date Created:</b> {{ post.date }}<br>
+<b>Body:</b> {{ post.body }}<br><br>
+</div>
+
+</div><br>
+<div class="btn-group" role="group" aria-label="Basic example">
+<a href="{% url 'update' post.id %}" class="btn btn-secondary">Update</a>  <a href="{% url 'delete' post.id %}" class="btn btn-danger">Delete</a>
+<a href="{% url 'index' %}" class="btn btn-dark">Go Back</a>
+</div>
+
+ {% endblock %}

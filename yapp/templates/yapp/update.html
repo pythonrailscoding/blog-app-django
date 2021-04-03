@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class='card width: 700rem;'>
+	<h3 class='card-header'>Update Post</h3>
+    <div class="container">
+    <div class="form-group">
+        <form action="" method="POST">
+    
+            {% csrf_token %}
+            
+            {{ form.as_p }}
+            <input type="submit" value="Update Post" class="btn btn-secondary">
+            <a href="{% url 'index' %}" class="btn btn-dark">Go Back</a>
+        
+        </form>
+    </div>
+<br>
+</div>
+</div>
+
+{% endblock %}

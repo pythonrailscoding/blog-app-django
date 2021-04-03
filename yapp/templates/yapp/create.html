@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+<h3 class='card-header'>Update Post</h3>
+    <div class="container">
+    <form method="POST" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create Post" class="btn btn-secondary"> <a href="{% url 'index' %}" class="btn btn-dark">Go Back</a><br>
+</form>
+<br>
+</div>
+</div>
+
+{% endblock %}

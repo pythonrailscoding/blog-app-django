@@ -1,0 +1,6 @@
+<form method="POST" action="">
+    {% csrf_token %}
+    Are you sure to Delete this Blog Post '{{ post.title }}'?<br><br>
+    <input type="submit" value="Delete">
+</form>
+<a href="{% url 'index' %}">Go Back</a>

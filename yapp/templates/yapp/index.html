@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for posts in object_list %}
+<a href="{% url 'detail' posts.id %}">{{ posts.title }}</a>- By: {{ posts.user }}<br> 
+{{ posts.body }}<br> <hr>
+<br>
+{% endfor %}
+{% endblock %}
