@@ -9,9 +9,6 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-def dedicated(request):
-    return render(request, 'yapp/dedicated.html', {})
-
 class BlogListView(ListView):
     model = Post
     template_name = 'yapp/index.html'
