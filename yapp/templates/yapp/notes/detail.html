@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if request.user.id == note.user.id %}
+<div class="btn-group" role="group" aria-label="Basic example">
+<a href="{% url 'note_list' %}" class="btn btn-secondary">Go Back</a><a href="{% url 'note_delete' note.id %}" class="btn btn-danger">Delete</a><a href="{% url 'note_update' note.id %}" class="btn btn-dark">Update</a>
+</div><br><br>
+<div class="card">
+    <h3 class="card-header">{{ note.title }}</h3><div class="container">
+<b>Date: </b>{{ note.date }}<br>
+<b>Body:</b><br>        
+{{ note.body|safe }}
+</div></div>
+{% else %}
+<h3>You are not allowed to view this Note. <a href="{% url 'note_list' %}">Go Back</a></h3>
+{% endif %}
+{% endblock %}

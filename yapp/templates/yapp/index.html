@@ -1,9 +1,23 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
 
+<form class="d-flex" method="POST" action="{% url 'search' %}">
+    {% csrf_token %}
+    <input class="form-control me-2" type="search" placeholder="Search Blog Posts by Title" aria-label="Search" name="searched">
+    <button class="btn btn-sm btn-outline-secondary" type="submit">Search</button>
+  </form><br><br>
 {% for posts in object_list %}
-<a href="{% url 'detail' posts.id %}">{{ posts.title }}</a>- By: {{ posts.user }}<br> 
-{{ posts.body }}<br> <hr>
+Posted on: {{ posts.date }}<a href="{% url 'detail' posts.id %}"><br>{{ posts.title }}</a>- By: {{ posts.user }} 
+{% if posts.user.profile.pic %}
+<img src="{{ posts.user.profile.pic.url }}" width="40" height="40" class="rounded-circle"><br>
+{% else %} 
+<img src="{% static 'yapp\images\user_profile_default_2.png' %}" width=40, height=40 class="rounded-circle">
+{% endif %}
+ <hr>
 <br>
+{% empty %}
+<h2>No Blog Posts Yet... Add One? Click <a href="{% url 'create' %}">here</a></h2>
 {% endfor %}
 {% endblock %}

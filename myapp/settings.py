@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,8 +26,10 @@ SECRET_KEY = 'h*his37mcb)u1m6dfu74jmflc)c_stuu%=td%xf-70tq)7jzm+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+#if DEBUG = True
+#ALLOWED_HOSTS = ['*']
+#else
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -38,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'yapp',
+    'members',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -119,3 +124,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'login'
+
+LOGIN_URL = 'login'

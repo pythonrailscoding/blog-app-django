@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if request.user.id == note.user.id %}
+<div class="card">
+    <h3 class="card-header">Update Note</h3><div class="container">
+<form method="POST" action="">
+{% csrf_token %}
+{{ form.media }}
+{{ form.user }}<br>
+{{ form.title }}<br>
+{{ form.body }}<br><br>
+<div class="btn-group" role="group" aria-label="Basic example">
+<input type="submit" value="Update Note" class="btn btn-secondary"><a href="{% url 'note_detail' note.id %}" class="btn btn-dark">Go Back</a>    
+</form>
+
+</div><br></div>
+{% else %}
+<h3>You are not allowed to view this Note. <a href="{% url 'note_list' %}">Go Back</a></h3>
+{% endif %}
+{% endblock %}

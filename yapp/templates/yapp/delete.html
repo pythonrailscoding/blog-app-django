@@ -1,6 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+{% if post.user.id == request.user.id %}
+<div class="card">
+	<h3 class="card-header">Delete Blog Post</h3>
+	<div class="container">
 <form method="POST" action="">
-    {% csrf_token %}
-    Are you sure to Delete this Blog Post '{{ post.title }}'?<br><br>
-    <input type="submit" value="Delete">
+    {% csrf_token %}<br>
+    <h5>Are you sure to Delete this Blog Post '{{ post.title }}'?<br><br></h5>
+    <div class="btn-group" role="group" aria-label="Basic example">
+    <input type="submit" value="Yes, I am Sure!!" class="btn btn-danger"><a href="{% url 'index' %}" class="btn btn-dark">Go Back</a>
+</div>
 </form>
-<a href="{% url 'index' %}">Go Back</a>
+<br>
+</div>
+</div>
+{% else %}
+<h3>You are not allowed to make any changes to this form!! <a href="{% url 'index' %}">Go Back</a></h3>
+{% endif %}
+{% else %}
+<h3>Hey!! You are not currently logged In!! <a href="{% url 'index' %}">Go Back</a> or <a href="{% url 'login' %}">Log In</a></h3>
+{% endif %}
+{% endblock %}

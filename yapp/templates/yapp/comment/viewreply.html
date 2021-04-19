@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<a href="{% url 'feedbacklist' %}" class="btn btn-secondary">Go Back</a><br><br>
+<div class="card">
+    <div class="container">
+{{ feedbackmodel.user }}, Posted on {{ feedbackmodel.date }}<br>
+{{ feedbackmodel.complaint|safe }}
+</div></div>
+<hr>
+<h5>Replies..</h5>
+{% if not feedbackmodel.reply.all %}
+{% if user.is_authenticated %}
+<h6>No Replies Yet.. Add <a href="{% url 'reply' feedbackmodel.id %}">One!!</h6>
+{% else %}
+<h6>No Replies Yet...</h6>
+{% endif %}
+    {% else %}
+    {% if user.is_authenticated %}
+    <h6> Add a Reply? Click <a href="{% url 'reply' feedbackmodel.id %}">here</a></h6>
+    {% else %}
+    {% endif %}
+    {% for reply in feedbackmodel.reply.all %}
+    <div class="card">
+        <div class="container">
+    Posted By: {{ reply.user }}, on {{ reply.date }}<br>
+    {{ reply.complaint }}
+    </div></div><br>
+    {% endfor %}
+    {% endif %}
+{% endblock %}

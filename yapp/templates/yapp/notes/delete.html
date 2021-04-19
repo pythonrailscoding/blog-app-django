@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if request.user.id == note.user.id %}
+<div class="card">
+    <h3 class="card-header">Delete Note</h3><div class="container">
+        <br>
+<form method="POST" action="">
+    {% csrf_token %}
+    <h5>Are You sure to delete this note '{{ note.title }}'?</h5>
+    <div class="btn-group" role="group" aria-label="Basic example">
+<input type="submit" value="Delete Note" class="btn btn-danger"><a href="{% url 'note_detail' note.id %}" class="btn btn-secondary">Go Back</a>    
+</div>
+</form>
+<br>
+</div></div>
+{% else %}
+<h3>You are not to delete this Note. <a href="{% url 'note_list' %}">Go Back</a></h3>
+{% endif %}
+{% endblock %}

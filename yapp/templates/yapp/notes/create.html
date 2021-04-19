@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="card">
+    <h3 class="card-header">Create Note</h3><div class="container">
+<form method="POST" action="">
+{% csrf_token %}
+{{ form.media }}
+{{ form.user }}<br>
+{{ form.title }}<br>
+{{ form.body }}<br><br>
+<div class="btn-group" role="group" aria-label="Basic example">
+<input type="submit" value="Create Note" class="btn btn-secondary"><a href="{% url 'note_list' %}" class="btn btn-dark">Go Back</a>    
+</form>
+<script>
+    var name = "{{ user.id }}";
+    document.getElementById('userid').value = name;
+</script>
+</div><br></div>
+{% else %}
+{% endif %}
+{% endblock %}

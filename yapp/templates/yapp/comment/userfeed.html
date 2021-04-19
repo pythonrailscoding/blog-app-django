@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<center><h3>Your FeedBack List</h3></center><hr><br>
+<div class="btn-group" role="group" aria-label="Basic example">
+<a href="{% url 'feedbacklist' %}" class="btn btn-dark">Go Back</a><a href="{% url 'feedbackcreate' %}" class="btn btn-secondary">Post Your FeedBack</a><br>
+</div>
+<br><br>
+<form class="d-flex" method="POST" action="{% url 'specific_feed' %}">
+    {% csrf_token %}
+    <input class="form-control me-2" type="search" placeholder="Search Your FeedBack by Title" aria-label="Search" name="searched">
+    <button class="btn btn-sm btn-outline-secondary" type="submit">Search</button>
+  </form><br><br>
+{% if user.is_authenticated %}
+{% for feed in object_list %}
+{% if feed.user.id == request.user.id %}
+<div class="card"><div class="container">
+    <a href="{% url 'reply' feed.id %}">|Reply|</a> 
+    
+    <a href="{% url 'reply_list' feed.id %}">|Details|</a><br>
+    You Posted This on {{ feed.date }}
+<br>Title: {{ feed.title }}
+</div></div><br>
+{% endif %}
+
+{% endfor %}
+{% else %}
+<h3>Hey!! You are not currently logged In!! <a href="{% url 'index' %}">Go Back</a> or <a href="{% url 'login' %}">Log In</a></h3>
+{% endif %}
+{% endblock %}

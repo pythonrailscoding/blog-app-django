@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+{% if searched %}
+<center><a href="{% url 'user' %}" class="btn btn-secondary" align="center">Go Back</a></center><hr>
+<center><h3>You searched for '{{ searched }}'</h3></center>
+{% for posts in form %}<br>
+{% if posts.user.id == request.user.id %}
+    Posted on: {{ posts.date }}<br>
+    <a href="{% url 'detail' posts.id %}">{{ posts.title }}</a>
+
+ <hr>
+<br>
+    {% endif %}
+    {% endfor %}
+{% else %}
+<h3>Hey!! You searched for Nothing!!</h3>
+{% endif %}
+{% else %}
+<h3>Hey!! You are not currently logged In!! <a href="{% url 'index' %}">Go Back</a> or <a href="{% url 'login' %}">Log In</a></h3>
+{% endif %}
+{% endblock %}

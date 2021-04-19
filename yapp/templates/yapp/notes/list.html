@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3><center>Your Notes</center></h3><hr>
+<div class="btn-group" role="group" aria-label="Basic example">
+<a href="{% url 'note_create' %}" class="btn btn-secondary">Add Note</a><a href="{% url 'index' %}" class="btn btn-dark">Go Back</a></div><br><br>
+<form class="d-flex" method="POST" action="{% url 'note_search' %}">
+    {% csrf_token %}
+    <input class="form-control me-2" type="search" placeholder="Search Your Blog Posts by Title" aria-label="Search" name="searched">
+    <button class="btn btn-sm btn-outline-secondary" type="submit">Search</button>
+  </form><br><br>
+{% for note in object_list %}
+{% if note.user.id == request.user.id %}
+<div class="card"><div class="container">
+Title: <a href="{% url 'note_detail' note.id %}">{{ note.title }}</a><br> Date: {{ note.date }}<br>
+</div></div><br>
+{% endif %}
+{% endfor %}
+{% endblock %}

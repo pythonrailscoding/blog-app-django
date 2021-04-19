@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+{% if searched %}
+<a href="{% url 'userfeed' %}" class="btn btn-secondary">Go Back</a>
+<center><h3>You searched for "{{ searched }}"</h3></center><hr><br>
+{% for feed in form %}
+{% if feed.user.id == request.user.id %}
+<div class="card"><div class="container">
+    <a href="{% url 'reply' feed.id %}">|Reply|</a> 
+    
+    <a href="{% url 'reply_list' feed.id %}">|Details|</a><br>
+    
+By: <b>{{ feed.user }}</b>, Posted on: {{ feed.date }}<br>Title: {{ feed.title }}<br>
+</div></div><br>
+
+{% endif %}
+{% endfor %}
+{% else %}
+<a href="{% url 'userfeed' %}" class="btn btn-secondary">Go Back</a>
+<h3><center>You searched for Nothing!!<center></h3><hr>
+{% endif %}
+{% else %}
+<h3>Hey!! You are not currently logged In!! <a href="{% url 'index' %}">Go Back</a> or <a href="{% url 'login' %}">Log In</a></h3>
+{% endif %}
+{% endblock %}

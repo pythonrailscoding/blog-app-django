@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<center><h3>Your Posts</h3></center><hr><br>
+<form class="d-flex" method="POST" action="{% url 'user_search' %}">
+    {% csrf_token %}
+    <input class="form-control me-2" type="search" placeholder="Search Your Blog Posts by Title" aria-label="Search" name="searched">
+    <button class="btn btn-sm btn-outline-secondary" type="submit">Search</button>
+  </form><br><br>
+{% for post in object_list %}
+{% if post.user.id == request.user.id %}
+<a href="{% url 'detail' post.id %}">{{ post.title }}</a> - Date Created: {{ post.date }}<br> 
+ <hr><br>
+{% endif %}
+{% empty %}
+<h2>You have No Blog Posts Yet... Add One? Click <a href="{% url 'create' %}">here</a></h2>
+{% endfor %}
+{% else %}
+<h3>Hey!! You are not currently logged In!! <a href="{% url 'index' %}">Go Back</a></h3>
+{% endif %}
+{% endblock %}

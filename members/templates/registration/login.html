@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<h3>Hey!! You are already Logged In!! <a href="{% url 'index' %}">Go Back</a></h3>
+{% else %}
+<div class="card">
+<h3 class="card-header">Login</h3>
+  <div class="container">
+	<div class='form-group'>
+	<form method='POST'>
+		{% csrf_token %}
+		
+		  <div class="mb-3">
+		  	<br>
+    <input type="text" class="form-control", name='username', placeholder="Username" >
+    <br>
+  <div class="mb-3">
+    <input type="password" class="form-control", name='password', placeholder="Password">
+  </div>
+
+		<button class= 'btn btn-secondary'>Login</button>
+	</div>
+	</form>
+  </div>
+</div>
+</div>
+<br>Want to Register? Click <a href="{% url 'register' %}">here</a>
+{% endif %}
+{% endblock %}

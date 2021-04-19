@@ -1,21 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class='card width: 700rem;'>
-	<h3 class='card-header'>Update Post</h3>
-    <div class="container">
-    <div class="form-group">
-        <form action="" method="POST">
-    
-            {% csrf_token %}
-            
-            {{ form.as_p }}
-            <input type="submit" value="Update Post" class="btn btn-secondary">
-            <a href="{% url 'index' %}" class="btn btn-dark">Go Back</a>
+{% if user.is_authenticated %}
+{% if post.user.id == request.user.id %}
+    <div class='card width: 700rem;'>
+    	<h3 class='card-header'>Update Post</h3>
+        <div class="container">
+        <div class="form-group">
+            <form enctype="multipart/form-data" action="" method="POST">
         
-        </form>
+                {% csrf_token %}
+                {{ form.media }}
+                {{ form.as_p }}
+                <div class="btn-group" role="group" aria-label="Basic example">
+                <input type="submit" value="Update Post" class="btn btn-secondary">
+                <a href="{% url 'index' %}" class="btn btn-dark">Go Back</a>
+            <div class="btn-group" role="group" aria-label="Basic example">
+            </form>
+        </div>
+    <br>
     </div>
-<br>
-</div>
-</div>
-
+    </div>
+{% else %}
+<h3>You are not allowed to make any changes to this form!! <a href="{% url 'index' %}">Go Back</a></h3>
+{% endif %}
+{% else %}
+<h3>Hey!! You are not currently logged In!! <a href="{% url 'index' %}">Go Back</a> or <a href="{% url 'login' %}">Log In</a></h3>
+{% endif %}
+<br><br>
 {% endblock %}

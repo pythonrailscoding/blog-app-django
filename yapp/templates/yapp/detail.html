@@ -1,17 +1,103 @@
+
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
+{% if user.is_authenticated %}
+	{% if post.user.id == request.user.id %}
+		<div class="btn-group" role="group" aria-label="Basic example">
+		<a href="{% url 'update' post.id %}" class="btn btn-secondary">Update</a>  <a href="{% url 'delete' post.id %}" class="btn btn-danger">Delete</a>
+		<a href="{% url 'index' %}" class="btn btn-dark">Go Back</a>
+		</div>
+	{% else %}
+		<a href="{% url 'index' %}" class="btn btn-dark">Go Back</a>
+		
+	{% endif %}
+	{% else %}
+<a href="{% url 'index' %}" class="btn btn-dark">Go Back</a>
+
+{% endif %}
+<br><br>
+
+<div class="card mb-3"  style="max-width: 800px;">
+	<h3 class="card-header">About {{ post.user.username }}</h3>
+	<div class="row g-0">
+		
+	  <div class="col-md-4">
+		{% if post.user.profile.pic %}
+		<img src="{{ post.user.profile.pic.url }}" width=250, height=250 class="">
+		{% else %}
+		<img src="{% static 'yapp\images\user_profile_default_2.png' %}" width=250, height=250>
+		{% endif %} 
+	  </div>
+	  
+	  
+	  
+	  <div class="col-md-8">
+		<div class="card-body">
+			<h4 class="card-title">Name: {{ post.user.first_name }} {{ post.user.last_name }}</h4>
+			<p class="small text-muted">
+				{% if post.user.profile.website_url %}
+				<a href="{{ post.user.profile.website_url }}">| Website |</a>
+				{% endif %}
+				{% if post.user.profile.facebook_url %}
+				<a href="{{ post.user.profile.facebook_url }}">| Facebook |</a>
+				{% endif %}
+				{% if post.user.profile.twitter_url %}
+				<a href="{{ post.user.profile.twitter_url }}">| Twitter |</a>
+				{% endif %}
+				{% if post.user.profile.instagram_url %}
+				<a href="{{ post.user.profile.instagram_url }}">| Instagram |</a>
+				{% endif %}
+			</p>
+		  {% if post.user.profile.body %}
+		  <h6><p class="card-text">{{ post.user.profile.body|safe }}</p></h6>
+		  {% else %}
+		  <h6><p class="card-text">Not entered any Description!!</p></h6>
+		  {% endif %}
+		</div>
+	  </div>
+	</div>
+  </div>
+
+<hr>
+
 <div class="card">
     <h3 class="card-header"><b>Title:</b> {{ post.title }}</h3>
     <div class="container">
 <b>Author:</b> {{ post.user }}<br>
 <b>Date Created:</b> {{ post.date }}<br>
-<b>Body:</b> {{ post.body }}<br><br>
+<b>Body:</b> <br>{% if post.image %}<img src="{{ post.image.url }}" width="250" height=200>{% endif %}{{ post.body|safe }}<br><br>{% if post.second_image %}<img src="{{ post.second_image.url }}" width=250 height=200>{% endif %}
+<br>
 </div>
-
-</div><br>
-<div class="btn-group" role="group" aria-label="Basic example">
-<a href="{% url 'update' post.id %}" class="btn btn-secondary">Update</a>  <a href="{% url 'delete' post.id %}" class="btn btn-danger">Delete</a>
-<a href="{% url 'index' %}" class="btn btn-dark">Go Back</a>
+<br>
 </div>
+<hr>
 
- {% endblock %}
+<div class="card">
+<h3 class="card-header">Comments</h3>
+<br>
+<div class="container">
+
+{% if not post.comments.all %}
+
+No Comments. <a href="{% url 'comment' post.id %}">Add one</a><br>
+
+{% else %}
+<ul>
+<a href="{% url 'comment' post.id %}">Add a Comment</a><br></ul>
+{% for comment in post.comments.all %}
+<div class="card">
+	<div class="container">
+<ul>
+{{ comment.user }} posted on {{ comment.date }}<br>{{ comment.body|safe }}
+</ul>
+</div></div>
+<br>
+{% endfor %}
+{% endif %}
+
+<br>
+</div>
+</div>
+<br><br>
+{% endblock %}

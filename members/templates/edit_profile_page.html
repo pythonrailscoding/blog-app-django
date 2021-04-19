@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+{% if request.user.profile.user.id == profile.user.id %}
+<div class="card">
+    <h3 class="card-header">Update Your Profile</h3><br>
+    <div class="container">
+<form method="POST" enctype='multipart/form-data'>
+    
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.user }}
+    Website Url<br>
+    {{ form.website_url }}<br>
+    Facebook Url<br>
+    {{ form.facebook_url }}<br>
+    Twitter Url<br>
+    {{ form.twitter_url }}<br>
+    Instagram Url<br>
+    {{ form.instagram_url }}<br>
+    {{ form.pic }}<br><br>
+    {{ form.body }}<br><br>
+    <div class="btn-group" role="group" aria-label="Basic example">
+    <input type="submit" value="Update Profile" class="btn btn-secondary">
+    <a href="{% url 'index' %}" class="btn btn-dark">Go Back</a>
+</div>
+    <script>
+        var name = "{{ profile.user.id }}";
+        document.getElementById('userid').value = name;
+    </script>
+    </form>
+<br>
+</div>
+    </div>
+    <br>
+    {% else %}
+    <h3>You are not allowed to make any changes to this form!! <a href="{% url 'index' %}">Go Back</a></h3>
+{% endif %}
+{% else %}
+<h3>Hey!! You are not currently logged In!! <a href="{% url 'index' %}">Go Back</a> or <a href="{% url 'login' %}">Log In</a></h3>
+{% endif %}
+
+{% endblock %}

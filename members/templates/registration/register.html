@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<h3>Hey!! You are already Logged In!! <a href="{% url 'index' %}">Go Back</a></h3>
+{% else %}
+<div class="card">
+	<h3 class="card-header">Register</h3>
+	<div class="container">
+<form method="POST" action="">
+    {% csrf_token %}
+    <br>
+    <h5> Create Your Account </h5><hr>
+    {{ form.username }}
+    <br>{{ form.password1 }}
+    <br>{{ form.password2 }}
+    <br>
+    <h5>Tell us Something about yourself!!</h5><hr>
+    {{ form.first_name }}<br>
+    {{ form.last_name }}<br>
+    {{ form.email }}<br>
+    <input type="submit" value="Register" class="btn btn-secondary"><br>
+</form>
+<br>
+</div>
+</div>
+<br>Want to Login? Click <a href="{% url 'login' %}">here</a><br>
+{% endif %}
+<br><br>
+{% endblock %}

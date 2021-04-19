@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<center><a href="{% url 'feedbacklist' %}" class="btn btn-secondary">Go back</a><br></center><hr>
+{% if searched %}
+<h3><center>You searched for '{{ searched }}'<hr></center></h3>
+<br>
+{% for feedback in form %}
+<div class="card"><div class="container">
+    <a href="{% url 'reply' feedback.id %}">|Reply|</a> 
+    
+    <a href="{% url 'reply_list' feedback.id %}">|Details|</a><br>
+    
+By: <b>{{ feedback.user }}</b>, Posted on: {{ feedback.date }}<br>Title: {{ feedback.title }}<br>
+</div></div><br>
+{% empty %}
+<br>
+
+<h3>No FeedBacks Under This Title!!</h3>
+{% endfor %}
+{% else %}
+<h3>You searched for Nothing!!</h3>
+{% endif %}
+{% endblock %}

@@ -1,15 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
+{% if user.is_authenticated %}
 <div class="card">
-<h3 class='card-header'>Update Post</h3>
+<h3 class='card-header'>Create Post</h3>
     <div class="container">
-    <form method="POST" action="">
+    <form method="POST" enctype="multipart/form-data" action="">
     {% csrf_token %}
+    {{ form.media }}
     {{ form.as_p }}
+    <div class="btn-group" role="group" aria-label="Basic example">
+
     <input type="submit" value="Create Post" class="btn btn-secondary"> <a href="{% url 'index' %}" class="btn btn-dark">Go Back</a><br>
+</div>
 </form>
 <br>
 </div>
 </div>
-
+<script>
+	  	var name = "{{ user.id }}";
+	  	document.getElementById('userid').value = name;
+	  </script>
+{% else %}
+<h3>Hey!! You are not currently logged In!! <a href="{% url 'index' %}">Go Back</a> or <a href="{% url 'login' %}">Log In</a></h3>
+{% endif %}
+<br>
 {% endblock %}

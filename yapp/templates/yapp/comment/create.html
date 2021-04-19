@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="card">
+    <h3 class="card-header">FeedBack</h3>
+    <div class="container">
+<form method="POST" action="">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.user }}<br>
+    {{ form.title }}<br>
+    {{ form.complaint }}<br>
+    <div class="btn-group" role="group" aria-label="Basic example">
+    <input type="submit" value="Post FeedBack" class="btn btn-secondary"><a href="{% url 'feedbacklist' %}" class="btn btn-dark">Go Back</a>
+    </div>
+    <script>
+        var name = "{{ user.id }}";
+        document.getElementById('userid').value = name;
+    </script>
+</form>
+</div>
+<br>
+</div>
+{% else %}
+<h3>Hey!! You are not currently logged In!! <a href="{% url 'index' %}">Go Back</a> or <a href="{% url 'login' %}">Log In</a></h3>
+{% endif %}
+{% endblock %}

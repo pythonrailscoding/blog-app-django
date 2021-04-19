@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="card">
+	<h3 class="card-header">Update Your Profile</h3>
+	<div class="container">
+<form method="POST" action="">
+	{% csrf_token %}<br>
+	{{ form.as_p }}
+<div class="btn-group" role="group" aria-label="Basic example">
+	<input type="submit" value="Update Your Profile" class="btn btn-secondary">
+	<a href="{% url 'index' %}" class="btn btn-dark">Go Back</a>
+</div>
+</form>
+<br>
+</div>
+</div>
+{% else %}
+<br>Want to Register? Click <a href="{% url 'login' %}">here</a>
+{% endif %}
+{% endblock %}

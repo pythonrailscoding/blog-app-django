@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+{% if searched %}<center>
+<a href="{% url 'note_list' %}" class="btn btn-secondary">Go Back</a><br>
+<h3><br>You searched for "{{ searched }}"</h3>
+<hr><br>
+</center>
+{% for form in form %}
+{% if form.user.id == request.user.id %}
+<div class="card"><div class="container">
+    Title: <a href="{% url 'note_detail' form.id %}">{{ form.title }}</a><br> Date: {{ form.date }}<br>
+    </div></div><br>
+{% endif %}
+{% endfor %}
+{% else %}
+<h3>You searched for nothing!!</h3>
+{% endif %}
+{% else %}
+<h3>Hey!! You are not currently logged In!! <a href="{% url 'index' %}">Go Back</a> or <a href="{% url 'login' %}">Log In</a></h3>
+{% endif %}
+{% endblock %}

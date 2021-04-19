@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<center><h3>FeedBack List</h3></center><hr><br>
+<div class="btn-group" role="group" aria-label="Basic example">
+<a href="{% url 'index' %}" class="btn btn-secondary">Go Back</a>
+
+{% if user.is_authenticated %}
+<a href="{% url 'feedbackcreate' %}" class="btn btn-dark">Post Your FeedBack</a>
+<a href="{% url 'userfeed' %}" class="btn btn-secondary">View Your Feedback</a>
+{% else %}
+<a href="{% url 'login' %}" class="btn btn-dark">Log In To Post Us your Feedback </a>
+{% endif %}
+</div>
+<br><br>
+<form class="d-flex" method="POST" action="{% url 'search_feed' %}">
+    {% csrf_token %}
+    <input class="form-control me-2" type="search" placeholder="Search FeedBack by Title" aria-label="Search" name="searched">
+    <button class="btn btn-sm btn-outline-secondary" type="submit">Search</button>
+  </form><br><br>
+{% for complaints in object_list %}
+<div class="card"><div class="container">
+    <a href="{% url 'reply' complaints.id %}">|Reply|</a> 
+    
+    <a href="{% url 'reply_list' complaints.id %}">|Details|</a><br>
+    
+By: <b>{{ complaints.user }}</b>, Posted on: {{ complaints.date }}<br>Title: {{ complaints.title }}<br>
+</div></div><br>
+{% empty %}
+<br>
+
+<h3>No FeedBacks Yet</h3>
+
+{% endfor %}
+
+{% endblock %}
